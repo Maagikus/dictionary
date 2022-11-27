@@ -1421,3 +1421,7 @@ textarea.input {
 		color: #fff;
 	}
 }
+.invalid {
+	color: red;
+	font-size: 13px;
+}

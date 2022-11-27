@@ -27,6 +27,19 @@ export const fetchAuthMe = createAsyncThunk('user/fetchAuthMe', async (token) =>
 	})
 	return response.json()
 })
+export const addUserData = createAsyncThunk('user/addUserData', async (data) => {
+	const response = await fetch('http://localhost:4444/auth/register', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+
+	})
+	if (response.status === 200) {
+		return response.json()
+	}
+})
 export const userSlice = createSlice({
 	name: 'user',
 	initialState,
@@ -53,6 +66,21 @@ export const userSlice = createSlice({
 
 		},
 		[fetchUserData.rejected]: (state, action) => {
+			state.data = null
+			state.status = 'error'
+
+		},
+		[addUserData.pending]: (state, action) => {
+			state.data = null
+			state.status = 'loading'
+
+		},
+		[addUserData.fulfilled]: (state, action) => {
+			state.data = action.payload
+			state.status = 'loaded'
+
+		},
+		[addUserData.rejected]: (state, action) => {
 			state.data = null
 			state.status = 'error'
 

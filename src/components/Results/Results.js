@@ -1,12 +1,12 @@
 function Results() {
 	return (
-		<section class="result">
-			<div class="result__container">
-				<div class="result__body">
-					<div class="result__title">Results</div>
-					<div class="result__content">
-						<div class="result__learned">You learned 5 new words this week</div>
-						<div class="result__vocab">Your vocabulary is 200 words</div>
+		<section className="result">
+			<div className="result__container">
+				<div className="result__body">
+					<div className="result__title">Results</div>
+					<div className="result__content">
+						<div className="result__learned">You learned 5 new words this week</div>
+						<div className="result__vocab">Your vocabulary is 200 words</div>
 					</div>
 				</div>
 			</div>

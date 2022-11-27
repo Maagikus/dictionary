@@ -12,26 +12,26 @@ function Header() {
 		window.localStorage.setItem('token', '')
 	}
 	return (
-		<header class="header">
-			<div class="header__container">
-				<a href="" class="header__logo">Interective Dictionary</a>
-				<div class="header__menu menu">
-					<button type="button" class="menu__icon icon-menu"><span></span></button>
-					<nav class="menu__body">
-						<ul class="menu__list">
+		<header className="header">
+			<div className="header__container">
+				<a href="" className="header__logo">Interective Dictionary</a>
+				<div className="header__menu menu">
+					<button type="button" className="menu__icon icon-menu"><span></span></button>
+					<nav className="menu__body">
+						<ul className="menu__list">
 							{isAuth ?
 								<>
-									<li class="menu__item _active"><NavLink to="/dictionary">Dictionary</NavLink></li>
-									<li class="menu__item"><a href="#">Quize</a></li>
-									<li class="menu__item"><a href="#">Results</a></li>
+									<li className="menu__item _active"><NavLink to="/dictionary">Dictionary</NavLink></li>
+									<li className="menu__item"><a href="#">Quize</a></li>
+									<li className="menu__item"><a href="#">Results</a></li>
 								</>
 								: null
 							}
 							{isAuth ?
-								<><li class="header__login"><NavLink onClick={onLogout} to="/Home" className="button">Log out</NavLink></li></>
+								<><li className="header__login"><NavLink onClick={onLogout} to="/Home" className="button">Log out</NavLink></li></>
 								: <>
-									<li class="header__login"><NavLink to="/login" className="button">Login In</NavLink></li>
-									<li class="header__registration"><NavLink to="/registration" className="button">Registration</NavLink></li>
+									<li className="header__login"><NavLink to="/login" className="button">Login In</NavLink></li>
+									<li className="header__registration"><NavLink to="/registration" className="button">Registration</NavLink></li>
 								</>
 							}
 						</ul>

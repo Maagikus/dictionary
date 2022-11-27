@@ -1,17 +1,17 @@
 function AddForm() {
 	return (
-		<form action="#" class="dictionary__form form-dictionary">
-			<div class="form-dictionary__wrapper">
-				<div class="form-dictionary__item">
-					<label class="form-dictionary__lable">Word</label>
-					<input autocomplete="off" type="text" name="form[]" data-error="Ошибка" placeholder="" class="form-dictionary__input input" />
+		<form action="#" className="dictionary__form form-dictionary">
+			<div className="form-dictionary__wrapper">
+				<div className="form-dictionary__item">
+					<label className="form-dictionary__lable">Word</label>
+					<input autocomplete="off" type="text" name="form[]" data-error="Ошибка" placeholder="" className="form-dictionary__input input" />
 				</div>
-				<div class="form-dictionary__item">
-					<label class="form-dictionary__lable">Translation</label>
-					<input autocomplete="off" type="text" name="form[]" data-error="Ошибка" placeholder="" class="form-dictionary__input input" />
+				<div className="form-dictionary__item">
+					<label className="form-dictionary__lable">Translation</label>
+					<input autocomplete="off" type="text" name="form[]" data-error="Ошибка" placeholder="" className="form-dictionary__input input" />
 				</div>
 			</div>
-			<button class="form-dictionary__button button">Add</button>
+			<button className="form-dictionary__button button">Add</button>
 		</form>
 	)
 }

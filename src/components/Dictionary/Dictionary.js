@@ -2,81 +2,81 @@ import AddForm from "../AddForm/AddForm"
 
 function Dictionary() {
 	return (
-		<section class="dictionary">
-			<div class="dictionary__container">
-				{/* <!-- <aside class="dictionary__menu menu-main">
-					<ul class="menu-main__list">
-						<li class="menu-main__item _active"><a href="#">Dictionary</a></li>
-						<li class="menu-main__item"><a href="#">Quize</a></li>
-						<li class="menu-main__item"><a href="#">Results</a></li>
+		<section className="dictionary">
+			<div className="dictionary__container">
+				{/* <!-- <aside className="dictionary__menu menu-main">
+					<ul className="menu-main__list">
+						<li className="menu-main__item _active"><a href="#">Dictionary</a></li>
+						<li className="menu-main__item"><a href="#">Quize</a></li>
+						<li className="menu-main__item"><a href="#">Results</a></li>
 					</ul>
 				</aside> --> */}
-				<div class="dictionary__body body-dictionary">
-					<div class="body-dictionary__header header-main">
-						<ul class="header-main__list">
-							<li class="header-main__item">Main Dictionary</li>
-							<li class="header-main__item">Irregular verbs</li>
+				<div className="dictionary__body body-dictionary">
+					<div className="body-dictionary__header header-main">
+						<ul className="header-main__list">
+							<li className="header-main__item">Main Dictionary</li>
+							<li className="header-main__item">Irregular verbs</li>
 						</ul>
 					</div>
-					<div class="body-dictionary__content">
-						<div class="body-dictionary__top top-dictionary">
-							<ul class="top-dictionary__list">
-								<li class="top-dictionary__item">word</li>
-								<li class="top-dictionary__item">transcription</li>
-								<li class="top-dictionary__item">Translation</li>
+					<div className="body-dictionary__content">
+						<div className="body-dictionary__top top-dictionary">
+							<ul className="top-dictionary__list">
+								<li className="top-dictionary__item">word</li>
+								<li className="top-dictionary__item">transcription</li>
+								<li className="top-dictionary__item">Translation</li>
 							</ul>
-							<form class="top-dictionary__serch" action="#">
-								<input type="text" name="form[]" data-error="Error" placeholder="Search word" class="top-dictionary__input input" />
+							<form className="top-dictionary__serch" action="#">
+								<input type="text" name="form[]" data-error="Error" placeholder="Search word" className="top-dictionary__input input" />
 
 							</form>
 						</div>
-						<div class="body-dictionary__bottom">
-							<div class="body-dictionary__left left-content">
-								<ul class="left-content__list">
-									<li class="left-content__item item-content">
-										<ul class="item-content__list">
-											<li class="item-content__item">Hello</li>
-											<li class="item-content__item">Hello</li>
-											<li class="item-content__item">Hello</li>
+						<div className="body-dictionary__bottom">
+							<div className="body-dictionary__left left-content">
+								<ul className="left-content__list">
+									<li className="left-content__item item-content">
+										<ul className="item-content__list">
+											<li className="item-content__item">Hello</li>
+											<li className="item-content__item">Hello</li>
+											<li className="item-content__item">Hello</li>
 										</ul>
 									</li>
-									<li class="left-content__item item-content">
-										<ul class="item-content__list">
-											<li class="item-content__item">Hello</li>
-											<li class="item-content__item">Hello</li>
-											<li class="item-content__item">Hello</li>
+									<li className="left-content__item item-content">
+										<ul className="item-content__list">
+											<li className="item-content__item">Hello</li>
+											<li className="item-content__item">Hello</li>
+											<li className="item-content__item">Hello</li>
 										</ul>
 									</li>
-									<li class="left-content__item item-content">
-										<ul class="item-content__list">
-											<li class="item-content__item">Hello</li>
-											<li class="item-content__item">Hello</li>
-											<li class="item-content__item">Hello</li>
+									<li className="left-content__item item-content">
+										<ul className="item-content__list">
+											<li className="item-content__item">Hello</li>
+											<li className="item-content__item">Hello</li>
+											<li className="item-content__item">Hello</li>
 										</ul>
 									</li>
 								</ul>
 							</div>
 							{/* <!-- _right-open --> */}
-							<div class="body-dictionary__right right-content">
-								<div class="right-content__close"></div>
-								<h2 class="right-content__title">Description and usage guide</h2>
-								<div class="right-content__body definition">
-									<h2 class="definition__title">Definition:</h2>
-									<p class="definition__content">DefinitiDefinition Definition Definition Definition Definition on</p>
+							<div className="body-dictionary__right right-content">
+								<div className="right-content__close"></div>
+								<h2 className="right-content__title">Description and usage guide</h2>
+								<div className="right-content__body definition">
+									<h2 className="definition__title">Definition:</h2>
+									<p className="definition__content">DefinitiDefinition Definition Definition Definition Definition on</p>
 								</div>
-								<div class="right-content__body usage">
-									<h2 class="usage__title">Definition:</h2>
-									<p class="usage__content">DefinitiDefinition
+								<div className="right-content__body usage">
+									<h2 className="usage__title">Definition:</h2>
+									<p className="usage__content">DefinitiDefinition
 										Definition Definition Definit
 										ion Definition on </p>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="body-dictionary__add">+</div>
+					<div className="body-dictionary__add">+</div>
 				</div>
-				<div class="dictionary__new new">
-					<div class="new__title">New word</div>
+				<div className="dictionary__new new">
+					<div className="new__title">New word</div>
 					<AddForm />
 				</div>
 			</div>
