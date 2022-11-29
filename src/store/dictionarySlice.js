@@ -13,9 +13,16 @@ export const addUserDictionary = createAsyncThunk('dictionary/addUserDictionary'
 		return response.json()
 	}
 })
+export const fetchUserDictionary = createAsyncThunk('dictionary/fetchUserDictionary', async (id) => {
+	const response = await fetch(`http://localhost:4444/dictionary/${id}`)
+	if (response.status === 200) {
+		return response.json()
+	}
+})
 const initialState = {
 	data: null,
-	status: 'idle'
+	status: 'idle',
+	dictionary: []
 }
 export const dictionarySlice = createSlice({
 	name: 'dictionary',
@@ -33,6 +40,21 @@ export const dictionarySlice = createSlice({
 
 		},
 		[addUserDictionary.rejected]: (state, action) => {
+			state.data = null
+			state.status = 'error'
+
+		},
+		[fetchUserDictionary.pending]: (state, action) => {
+			state.data = null
+			state.status = 'loading'
+
+		},
+		[fetchUserDictionary.fulfilled]: (state, action) => {
+			state.dictionary = action.payload
+			state.status = 'loaded'
+
+		},
+		[fetchUserDictionary.rejected]: (state, action) => {
 			state.data = null
 			state.status = 'error'
 

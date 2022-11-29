@@ -1,6 +1,47 @@
+import { useCallback, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchUserDictionary } from "../../store/dictionarySlice"
 import AddForm from "../AddForm/AddForm"
 
+
 function Dictionary() {
+	const id = useSelector(state => state.user.data._id)
+	const data = useSelector(state => state.dictionary.dictionary)
+	const dispatch = useDispatch()
+	const [defifnition, setDefinition] = useState('')
+	const [example, setExample] = useState('')
+	useEffect(() => {
+		dispatch(fetchUserDictionary(id))
+
+	}, [data])
+	const viewDescr = async (someWord) => {
+		const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${someWord}`)
+		const data = await response.json()
+		const { definition, example } = data[0].meanings[0].definitions[0]
+		setDefinition(definition)
+		setExample(example)
+
+
+	}
+	const renderDictionary = (arr) => {
+		if (arr) {
+			const element = arr.map(({ word, translation, transcription }, index) => {
+				return (
+					<li key={index} className="left-content__item item-content">
+						<ul onClick={() => viewDescr(word)} className="item-content__list">
+							<li className="item-content__item">{word}</li>
+							<li className="item-content__item">{transcription}</li>
+							<li className="item-content__item">{translation}</li>
+						</ul>
+					</li>
+				)
+			})
+			return element
+		}
+	}
+
+	const element = renderDictionary(data)
+
 	return (
 		<section className="dictionary">
 			<div className="dictionary__container">
@@ -27,33 +68,12 @@ function Dictionary() {
 							</ul>
 							<form className="top-dictionary__serch" action="#">
 								<input type="text" name="form[]" data-error="Error" placeholder="Search word" className="top-dictionary__input input" />
-
 							</form>
 						</div>
 						<div className="body-dictionary__bottom">
 							<div className="body-dictionary__left left-content">
 								<ul className="left-content__list">
-									<li className="left-content__item item-content">
-										<ul className="item-content__list">
-											<li className="item-content__item">Hello</li>
-											<li className="item-content__item">Hello</li>
-											<li className="item-content__item">Hello</li>
-										</ul>
-									</li>
-									<li className="left-content__item item-content">
-										<ul className="item-content__list">
-											<li className="item-content__item">Hello</li>
-											<li className="item-content__item">Hello</li>
-											<li className="item-content__item">Hello</li>
-										</ul>
-									</li>
-									<li className="left-content__item item-content">
-										<ul className="item-content__list">
-											<li className="item-content__item">Hello</li>
-											<li className="item-content__item">Hello</li>
-											<li className="item-content__item">Hello</li>
-										</ul>
-									</li>
+									{element}
 								</ul>
 							</div>
 							{/* <!-- _right-open --> */}
@@ -62,13 +82,11 @@ function Dictionary() {
 								<h2 className="right-content__title">Description and usage guide</h2>
 								<div className="right-content__body definition">
 									<h2 className="definition__title">Definition:</h2>
-									<p className="definition__content">DefinitiDefinition Definition Definition Definition Definition on</p>
+									<p className="definition__content">{defifnition}</p>
 								</div>
 								<div className="right-content__body usage">
-									<h2 className="usage__title">Definition:</h2>
-									<p className="usage__content">DefinitiDefinition
-										Definition Definition Definit
-										ion Definition on </p>
+									<h2 className="usage__title">Example:</h2>
+									<p className="usage__content">{!example ? 'we dont have example' : example}</p>
 								</div>
 							</div>
 						</div>

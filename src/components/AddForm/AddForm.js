@@ -13,7 +13,7 @@ function AddForm() {
 		const { text, audio } = data[0].phonetics[1]
 		const dictionaryData = {
 			word: word,
-			transcription: text,
+			transcription: text ? text : '',
 			translation: translation,
 			audio: audio
 		}
