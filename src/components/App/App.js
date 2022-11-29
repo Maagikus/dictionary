@@ -7,11 +7,10 @@ import { fetchAuthMe } from "../../store/userSlice";
 import { useEffect } from "react";
 function App() {
 	const token = localStorage.getItem('token')
-	console.log(token);
 	const dispatch = useDispatch()
 	useEffect(() => {
 		if (!!token) {
-			dispatch(fetchAuthMe())
+			dispatch(fetchAuthMe(token))
 		}
 
 	}, [])

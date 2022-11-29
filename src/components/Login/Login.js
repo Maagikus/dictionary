@@ -3,7 +3,6 @@ import { fetchUserData, selectIsAuth } from '../../store/userSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { isEmailValid, isPasswordlValid } from '../../services/validation.service.js'
-
 function Login() {
 	const dispatch = useDispatch()
 	const isAuth = useSelector(selectIsAuth)
@@ -25,7 +24,6 @@ function Login() {
 	const data = {
 		email: email,
 		password: password,
-
 	}
 	const isEmailValid = (e) => {
 		setEmail(e.target.value)
@@ -66,7 +64,6 @@ function Login() {
 		if (resp.payload.token) {
 			window.localStorage.setItem('token', resp.payload.token)
 		}
-
 	}
 	return (
 		<section className="login">
