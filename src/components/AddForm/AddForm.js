@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addUserDictionary } from "../../store/dictionarySlice"
-
 function AddForm() {
 	const dispatch = useDispatch()
 	const [word, setWord] = useState('')

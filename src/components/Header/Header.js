@@ -22,8 +22,8 @@ function Header() {
 							{isAuth ?
 								<>
 									<li className="menu__item _active"><NavLink to="/dictionary">Dictionary</NavLink></li>
-									<li className="menu__item"><a href="#">Quize</a></li>
-									<li className="menu__item"><a href="#">Results</a></li>
+									<li className="menu__item"><NavLink to="/quize">Quize</NavLink></li>
+									<li className="menu__item"><NavLink to="/results">Results</NavLink></li>
 								</>
 								: null
 							}

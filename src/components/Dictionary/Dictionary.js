@@ -56,7 +56,7 @@ function Dictionary() {
 					<div className="body-dictionary__header header-main">
 						<ul className="header-main__list">
 							<li className="header-main__item">Main Dictionary</li>
-							<li className="header-main__item">Irregular verbs</li>
+							{/* <li className="header-main__item">Irregular verbs</li> */}
 						</ul>
 					</div>
 					<div className="body-dictionary__content">
