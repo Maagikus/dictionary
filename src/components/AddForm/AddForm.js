@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addUserDictionary } from "../../store/dictionarySlice"
-function AddForm() {
+function AddForm({ setActive }) {
 	const dispatch = useDispatch()
 	const [word, setWord] = useState('')
 	const [translation, setTranslation] = useState('')
+
 	const onSubmit = async (e) => {
 		e.preventDefault()
+
 		const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
 		const data = await response.json()
 		const { text, audio } = data[0].phonetics[1]
@@ -19,10 +21,15 @@ function AddForm() {
 		dispatch(addUserDictionary(dictionaryData))
 		setWord('')
 		setTranslation('')
+		setActive(false)
 
 	}
+
 	return (
-		<form onSubmit={e => onSubmit(e)} action="#" className="dictionary__form form-dictionary">
+		<form onSubmit={e => {
+			onSubmit(e)
+
+		}} action="#" className="dictionary__form form-dictionary">
 			<div className="form-dictionary__wrapper">
 				<div className="form-dictionary__item">
 					<label className="form-dictionary__lable">Word</label>

@@ -10,6 +10,8 @@ function Dictionary() {
 	const dispatch = useDispatch()
 	const [defifnition, setDefinition] = useState('')
 	const [example, setExample] = useState('')
+	const [openDefinition, setOpenDefinition] = useState(false)
+	const [formOpen, setFormOpen] = useState(false)
 
 	useEffect(() => {
 		dispatch(fetchUserDictionary(id))
@@ -41,7 +43,11 @@ function Dictionary() {
 			const element = arr.slice(firstContentIndex, lastContentIndex).map(({ word, translation, transcription }, index) => {
 				return (
 					<li key={index} className="left-content__item item-content">
-						<ul onClick={() => viewDescr(word)} className="item-content__list">
+						<ul onTouchStart={() => {
+							setOpenDefinition(true)
+							viewDescr(word)
+						}
+						} onClick={() => viewDescr(word)} className="item-content__list">
 							<li className="item-content__item">{word}</li>
 							<li className="item-content__item">{transcription}</li>
 							<li className="item-content__item">{translation}</li>
@@ -52,19 +58,13 @@ function Dictionary() {
 			return element
 		}
 	}
-
 	const element = renderDictionary(data)
-
 	return (
-		<section className="dictionary">
+		<section onClick={(e) => {
+			setFormOpen(false)
+			e.stopPropagation()
+		}} className="dictionary">
 			<div className="dictionary__container">
-				{/* <!-- <aside className="dictionary__menu menu-main">
-					<ul className="menu-main__list">
-						<li className="menu-main__item _active"><a href="#">Dictionary</a></li>
-						<li className="menu-main__item"><a href="#">Quize</a></li>
-						<li className="menu-main__item"><a href="#">Results</a></li>
-					</ul>
-				</aside> --> */}
 				<div className="dictionary__body body-dictionary">
 					<div className="body-dictionary__header header-main">
 						<ul className="header-main__list">
@@ -107,8 +107,8 @@ function Dictionary() {
 								</div>
 							</div>
 							{/* <!-- _right-open --> */}
-							<div className="body-dictionary__right right-content">
-								<div className="right-content__close"></div>
+							<div className={openDefinition ? "body-dictionary__right right-content _right-open" : "body-dictionary__right right-content"} >
+								<div onClick={() => setOpenDefinition(false)} className="right-content__close"></div>
 								<h2 className="right-content__title">Description and usage guide</h2>
 								<div className="right-content__body definition">
 									<h2 className="definition__title">Definition:</h2>
@@ -121,11 +121,14 @@ function Dictionary() {
 							</div>
 						</div>
 					</div>
-					<div className="body-dictionary__add">+</div>
+					<div onClick={(e) => {
+						setFormOpen(true)
+						e.stopPropagation()
+					}} className="body-dictionary__add">+</div>
 				</div>
-				<div className="dictionary__new new">
+				<div onClick={e => e.stopPropagation()} className={formOpen ? "dictionary__new new _formOpen" : "dictionary__new new"}>
 					<div className="new__title">New word</div>
-					<AddForm />
+					<AddForm setActive={setFormOpen} />
 				</div>
 			</div>
 		</section>
