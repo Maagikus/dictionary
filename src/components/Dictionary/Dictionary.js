@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUserDictionary } from "../../store/dictionarySlice"
 import AddForm from "../AddForm/AddForm"
-
+import usePagination from '../../hooks/usePaginnation.hook'
 
 function Dictionary() {
 	const id = useSelector(state => state.user.data._id)
@@ -10,10 +10,23 @@ function Dictionary() {
 	const dispatch = useDispatch()
 	const [defifnition, setDefinition] = useState('')
 	const [example, setExample] = useState('')
+
 	useEffect(() => {
 		dispatch(fetchUserDictionary(id))
 
 	}, [data])
+	const {
+		firstContentIndex,
+		lastContentIndex,
+		nextPage,
+		prevPage,
+		page,
+		setPage,
+		totalPages,
+	} = usePagination({
+		contentPerPage: 10,
+		count: data.length,
+	});
 	const viewDescr = async (someWord) => {
 		const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${someWord}`)
 		const data = await response.json()
@@ -25,7 +38,7 @@ function Dictionary() {
 	}
 	const renderDictionary = (arr) => {
 		if (arr) {
-			const element = arr.map(({ word, translation, transcription }, index) => {
+			const element = arr.slice(firstContentIndex, lastContentIndex).map(({ word, translation, transcription }, index) => {
 				return (
 					<li key={index} className="left-content__item item-content">
 						<ul onClick={() => viewDescr(word)} className="item-content__list">
@@ -75,6 +88,23 @@ function Dictionary() {
 								<ul className="left-content__list">
 									{element}
 								</ul>
+								<div className="pagination">
+									<button onClick={prevPage} className="page-arrow">
+										&larr;
+									</button>
+									{[...Array(totalPages).keys()].map((el) => (
+										<button
+											onClick={() => setPage(el + 1)}
+											key={el}
+											className={`page ${page === el + 1 ? "active" : ""}`}
+										>
+											{el + 1}
+										</button>
+									))}
+									<button onClick={nextPage} className="page-arrow">
+										&rarr;
+									</button>
+								</div>
 							</div>
 							{/* <!-- _right-open --> */}
 							<div className="body-dictionary__right right-content">
