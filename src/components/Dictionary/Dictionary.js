@@ -12,7 +12,8 @@ function Dictionary() {
 	const [example, setExample] = useState('')
 	const [openDefinition, setOpenDefinition] = useState(false)
 	const [formOpen, setFormOpen] = useState(false)
-
+	const [filter, setFilter] = useState('')
+	const [foundWord, setFoundWord] = useState([])
 	useEffect(() => {
 		dispatch(fetchUserDictionary(id))
 
@@ -58,12 +59,38 @@ function Dictionary() {
 			return element
 		}
 	}
+	const filteredDictionary = (e, word) => {
+		e.preventDefault()
+		const filteredList = data.filter(item => item.word === word)
+		setFoundWord(filteredList)
+	}
+
+	const renderFoundedWord = (arr) => {
+		return (
+			<div className="find-popup">
+				<ul
+					className="item-content__list">
+					{arr.map(({ word, transcription, translation }) => {
+						return (
+							<>
+								<li className="item-content__item">{word}</li>
+								<li className="item-content__item">{transcription}</li>
+								<li className="item-content__item">{translation}</li>
+							</>
+						)
+					})}
+				</ul>
+			</div>
+		)
+	}
+	const foundElement = renderFoundedWord(foundWord)
 	const element = renderDictionary(data)
 	return (
 		<section onClick={(e) => {
 			setFormOpen(false)
 			e.stopPropagation()
 		}} className="dictionary">
+			{foundElement}
 			<div className="dictionary__container">
 				<div className="dictionary__body body-dictionary">
 					<div className="body-dictionary__header header-main">
@@ -79,8 +106,10 @@ function Dictionary() {
 								<li className="top-dictionary__item">transcription</li>
 								<li className="top-dictionary__item">Translation</li>
 							</ul>
-							<form className="top-dictionary__serch" action="#">
-								<input type="text" name="form[]" data-error="Error" placeholder="Search word" className="top-dictionary__input input" />
+							<form onChange={(e) => filteredDictionary(e, e.target.value)} className="top-dictionary__serch" action="#">
+								<input value={filter} onChange={(e) => {
+									setFilter(e.target.value)
+								}} type="text" name="form[]" data-error="Error" placeholder="Search word" className="top-dictionary__input input" />
 							</form>
 						</div>
 						<div className="body-dictionary__bottom">
