@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchUserDictionary } from "../../store/dictionarySlice"
 import AddForm from "../AddForm/AddForm"
 import usePagination from '../../hooks/usePaginnation.hook'
-
 function Dictionary() {
 	const id = useSelector(state => state.user.data._id)
 	const data = useSelector(state => state.dictionary.dictionary)
@@ -14,6 +13,7 @@ function Dictionary() {
 	const [formOpen, setFormOpen] = useState(false)
 	const [filter, setFilter] = useState('')
 	const [foundWord, setFoundWord] = useState([])
+	const [popupVisible, setPopupVisible] = useState(false)
 	useEffect(() => {
 		dispatch(fetchUserDictionary(id))
 
@@ -36,8 +36,6 @@ function Dictionary() {
 		const { definition, example } = data[0].meanings[0].definitions[0]
 		setDefinition(definition)
 		setExample(example)
-
-
 	}
 	const renderDictionary = (arr) => {
 		if (arr) {
@@ -62,20 +60,27 @@ function Dictionary() {
 	const filteredDictionary = (e, word) => {
 		e.preventDefault()
 		const filteredList = data.filter(item => item.word === word)
-		setFoundWord(filteredList)
-	}
+		if (filteredList.length > 0) {
+			viewDescr(word)
+			setFoundWord(filteredList)
+			setPopupVisible(true)
+		}
 
+
+	}
 	const renderFoundedWord = (arr) => {
 		return (
 			<div className="find-popup">
+				<div onClick={() => setPopupVisible(false)} class="find-popup__close">x</div>
+				<div class="find-popup__descr">{defifnition}</div>
 				<ul
-					className="item-content__list">
+					className="find-popup__list">
 					{arr.map(({ word, transcription, translation }) => {
 						return (
 							<>
-								<li className="item-content__item">{word}</li>
-								<li className="item-content__item">{transcription}</li>
-								<li className="item-content__item">{translation}</li>
+								<li className="find-popup__item">{word}</li>
+								<li className="find-popup__item">{transcription}</li>
+								<li className="find-popup__item">{translation}</li>
 							</>
 						)
 					})}
@@ -90,7 +95,7 @@ function Dictionary() {
 			setFormOpen(false)
 			e.stopPropagation()
 		}} className="dictionary">
-			{foundElement}
+			{popupVisible ? foundElement : null}
 			<div className="dictionary__container">
 				<div className="dictionary__body body-dictionary">
 					<div className="body-dictionary__header header-main">
@@ -106,10 +111,11 @@ function Dictionary() {
 								<li className="top-dictionary__item">transcription</li>
 								<li className="top-dictionary__item">Translation</li>
 							</ul>
-							<form onChange={(e) => filteredDictionary(e, e.target.value)} className="top-dictionary__serch" action="#">
+							<form onSubmit={(e) => filteredDictionary(e, filter)} className="top-dictionary__serch" action="#">
 								<input value={filter} onChange={(e) => {
 									setFilter(e.target.value)
 								}} type="text" name="form[]" data-error="Error" placeholder="Search word" className="top-dictionary__input input" />
+								<button className="top-dictionary__icon"><img src="search.png" alt="search" /></button>
 							</form>
 						</div>
 						<div className="body-dictionary__bottom">
@@ -160,7 +166,7 @@ function Dictionary() {
 					<AddForm setActive={setFormOpen} />
 				</div>
 			</div>
-		</section>
+		</section >
 	)
 }
 export default Dictionary
