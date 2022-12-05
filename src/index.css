@@ -1495,3 +1495,11 @@ textarea.input {
 	height: 20px;
 	width: 20px;
 }
+.body-quize__error {
+	color: red;
+	font-size: 14px;
+}
+.choose__button._active {
+	background-color: #74cc92;
+	color: #fff;
+}

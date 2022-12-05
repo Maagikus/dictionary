@@ -65,8 +65,6 @@ function Dictionary() {
 			setFoundWord(filteredList)
 			setPopupVisible(true)
 		}
-
-
 	}
 	const renderFoundedWord = (arr) => {
 		return (
@@ -141,7 +139,6 @@ function Dictionary() {
 									</button>
 								</div>
 							</div>
-							{/* <!-- _right-open --> */}
 							<div className={openDefinition ? "body-dictionary__right right-content _right-open" : "body-dictionary__right right-content"} >
 								<div onClick={() => setOpenDefinition(false)} className="right-content__close"></div>
 								<h2 className="right-content__title">Description and usage guide</h2>
