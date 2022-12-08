@@ -88,6 +88,9 @@ function Dictionary() {
 	}
 	const foundElement = renderFoundedWord(foundWord)
 	const element = renderDictionary(data)
+	if (popupVisible) {
+		document.body.style.overflow = "hidden"
+	}
 	return (
 		<section onClick={(e) => {
 			setFormOpen(false)

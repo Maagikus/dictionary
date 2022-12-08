@@ -13,12 +13,14 @@ function AddForm({ setActive }) {
 			const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
 			if (response.status === 200) {
 				const data = await response.json()
-				const { text, audio } = data[0].phonetics[1]
+				const { text } = data[0].phonetics[1]
+				const { phonetics } = data[0]
+				const audio = phonetics.filter(item => item.audio)
 				const dictionaryData = {
 					word: word,
 					transcription: text ? text : '',
 					translation: translation,
-					audio: audio
+					audio: audio[0].audio
 				}
 				dispatch(addUserDictionary(dictionaryData))
 				setWord('')

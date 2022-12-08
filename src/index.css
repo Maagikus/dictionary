@@ -1485,8 +1485,38 @@ textarea.input {
 	display: flex;
 	gap: 50px;
 }
-.find-popup__item {
+.unnknown-popup {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	z-index: 2;
+	gap: 30px;
+	padding-top: 70px;
 }
+.unnknown-popup__close {
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 20px;
+	right: 30px;
+}
+.unnknown-popup__list {
+	display: flex;
+	justify-content: center;
+
+	gap: 25px;
+	max-width: 320px;
+	flex-wrap: wrap;
+}
+
 .top-dictionary__icon {
 	display: flex;
 	align-items: center;
@@ -1502,4 +1532,7 @@ textarea.input {
 .choose__button._active {
 	background-color: #74cc92;
 	color: #fff;
+}
+.quize__container {
+	position: relative;
 }
