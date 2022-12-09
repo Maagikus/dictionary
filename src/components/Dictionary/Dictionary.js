@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchUserDictionary } from "../../store/dictionarySlice"
 import AddForm from "../AddForm/AddForm"
 import usePagination from '../../hooks/usePaginnation.hook'
+import Loader from '../Loader/Loader'
 function Dictionary() {
 	const id = useSelector(state => state.user.data._id)
 	const data = useSelector(state => state.dictionary.dictionary)
@@ -96,6 +97,7 @@ function Dictionary() {
 			setFormOpen(false)
 			e.stopPropagation()
 		}} className="dictionary">
+
 			{popupVisible ? foundElement : null}
 			<div className="dictionary__container">
 				<div className="dictionary__body body-dictionary">
@@ -120,7 +122,9 @@ function Dictionary() {
 							</form>
 						</div>
 						<div className="body-dictionary__bottom">
+
 							<div className="body-dictionary__left left-content">
+								<Loader />
 								<ul className="left-content__list">
 									{element}
 								</ul>
