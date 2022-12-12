@@ -1,37 +1,40 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addUserDictionary } from "../../store/dictionarySlice"
+import useApiDictionaryService from "../../services/api.dictionary.service";
 function AddForm({ setActive }) {
 	const dispatch = useDispatch()
 	const [word, setWord] = useState('')
 	const [translation, setTranslation] = useState('')
 	const [formErrorMassage, setFormErrorMassage] = useState('')
+	const [transcription, setTranscription] = useState('')
+	const [audio, setAudio] = useState('')
 	const [formError, setFormError] = useState(false)
+	const { loading, error, getTranscriptionAndAudio } = useApiDictionaryService()
 	const onSubmit = async (e) => {
 		e.preventDefault()
 		if (word.length > 1 && translation.length > 1) {
-			const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-			if (response.status === 200) {
-				const data = await response.json()
-				const { text } = data[0].phonetics[1]
-				const { phonetics } = data[0]
-				const audio = phonetics.filter(item => item.audio)
-				const dictionaryData = {
-					word: word,
-					transcription: text ? text : '',
-					translation: translation,
-					audio: audio[0].audio
-				}
-				dispatch(addUserDictionary(dictionaryData))
-				setWord('')
-				setTranslation('')
-				setActive(false)
-				setFormError(false)
-			}
-			if (response.status === 404) {
-				setFormError(true)
-				setFormErrorMassage('something was wrong, pleace check your word')
-			}
+			getTranscriptionAndAudio(word)
+				.then(({ transcription, audio }) => {
+					setTranscription(transcription)
+					setAudio(audio)
+					const dictionaryData = {
+						word: word,
+						transcription: transcription,
+						translation: translation,
+						audio: audio
+					}
+					dispatch(addUserDictionary(dictionaryData))
+				})
+			setWord('')
+			setTranslation('')
+			setActive(false)
+			setFormError(false)
+
+			// if (response.status === 404) {
+			// 	setFormError(true)
+			// 	setFormErrorMassage('something was wrong, pleace check your word')
+			// }
 		}
 	}
 	return (

@@ -4,10 +4,12 @@ import { fetchUserDictionary } from "../../store/dictionarySlice"
 import AddForm from "../AddForm/AddForm"
 import usePagination from '../../hooks/usePaginnation.hook'
 import Loader from '../Loader/Loader'
+import useApiDictionaryService from "../../services/api.dictionary.service";
 function Dictionary() {
 	const id = useSelector(state => state.user.data._id)
 	const data = useSelector(state => state.dictionary.dictionary)
 	const status = useSelector(state => state.dictionary.status)
+	const { loading, error, getDefinitionAndExample } = useApiDictionaryService()
 	const dispatch = useDispatch()
 	const [defifnition, setDefinition] = useState('')
 	const [example, setExample] = useState('')
@@ -34,14 +36,21 @@ function Dictionary() {
 	});
 	const viewDescr = async (someWord) => {
 		setDescriptionStatus('loading')
-		const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${someWord}`)
-		if (response.ok) {
-			setDescriptionStatus('loaded')
-			const data = await response.json()
-			const { definition, example } = data[0].meanings[0].definitions[0]
-			setDefinition(definition)
-			setExample(example)
-		}
+		getDefinitionAndExample(someWord)
+			.then(({ definition, example }) => {
+				setDescriptionStatus('loaded')
+				setDefinition(definition)
+				setExample(example)
+			})
+
+		// const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${someWord}`)
+		// if (response.ok) {
+		// 	setDescriptionStatus('loaded')
+		// 	const data = await response.json()
+		// 	const { definition, example } = data[0].meanings[0].definitions[0]
+		// 	setDefinition(definition)
+		// 	setExample(example)
+		// }
 	}
 	const renderDictionary = (arr) => {
 		if (arr) {

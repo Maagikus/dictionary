@@ -14,7 +14,7 @@ function Header() {
 	return (
 		<header className="header">
 			<div className="header__container">
-				<a href="" className="header__logo">Interective Dictionary</a>
+				<NavLink to="/dictionary" className="header__logo">Interective Dictionary</NavLink>
 				<div className="header__menu menu">
 					<button type="button" className="menu__icon icon-menu"><span></span></button>
 					<nav className="menu__body">

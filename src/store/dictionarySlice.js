@@ -36,6 +36,7 @@ export const dictionarySlice = createSlice({
 		},
 		[addUserDictionary.fulfilled]: (state, action) => {
 			state.data = action.payload
+			state.dictionary = [...state.dictionary, action.payload]
 			state.status = 'loaded'
 
 		},
