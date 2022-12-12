@@ -651,6 +651,7 @@ textarea.input {
 	padding-left: 0.875rem;
 	padding-right: 0.875rem;
 	padding-bottom: 0.625rem;
+	position: relative;
 }
 
 .header-main__list {

@@ -7,6 +7,7 @@ import Loader from '../Loader/Loader'
 function Dictionary() {
 	const id = useSelector(state => state.user.data._id)
 	const data = useSelector(state => state.dictionary.dictionary)
+	const status = useSelector(state => state.dictionary.status)
 	const dispatch = useDispatch()
 	const [defifnition, setDefinition] = useState('')
 	const [example, setExample] = useState('')
@@ -15,10 +16,10 @@ function Dictionary() {
 	const [filter, setFilter] = useState('')
 	const [foundWord, setFoundWord] = useState([])
 	const [popupVisible, setPopupVisible] = useState(false)
+	const [descriptionStatus, setDescriptionStatus] = useState('idle')
 	useEffect(() => {
 		dispatch(fetchUserDictionary(id))
-
-	}, [data])
+	}, [])
 	const {
 		firstContentIndex,
 		lastContentIndex,
@@ -32,11 +33,15 @@ function Dictionary() {
 		count: data.length,
 	});
 	const viewDescr = async (someWord) => {
+		setDescriptionStatus('loading')
 		const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${someWord}`)
-		const data = await response.json()
-		const { definition, example } = data[0].meanings[0].definitions[0]
-		setDefinition(definition)
-		setExample(example)
+		if (response.ok) {
+			setDescriptionStatus('loaded')
+			const data = await response.json()
+			const { definition, example } = data[0].meanings[0].definitions[0]
+			setDefinition(definition)
+			setExample(example)
+		}
 	}
 	const renderDictionary = (arr) => {
 		if (arr) {
@@ -122,41 +127,53 @@ function Dictionary() {
 							</form>
 						</div>
 						<div className="body-dictionary__bottom">
-
 							<div className="body-dictionary__left left-content">
-								<Loader />
-								<ul className="left-content__list">
-									{element}
-								</ul>
-								<div className="pagination">
-									<button onClick={prevPage} className="page-arrow">
-										&larr;
-									</button>
-									{[...Array(totalPages).keys()].map((el) => (
-										<button
-											onClick={() => setPage(el + 1)}
-											key={el}
-											className={`page ${page === el + 1 ? "active" : ""}`}
-										>
-											{el + 1}
-										</button>
-									))}
-									<button onClick={nextPage} className="page-arrow">
-										&rarr;
-									</button>
-								</div>
+								{status === 'loading'
+									?
+									<Loader />
+									:
+									<>
+										<ul className="left-content__list">
+											{element}
+										</ul>
+										<div className="pagination">
+											<button onClick={prevPage} className="page-arrow">
+												&larr;
+											</button>
+											{[...Array(totalPages).keys()].map((el) => (
+												<button
+													onClick={() => setPage(el + 1)}
+													key={el}
+													className={`page ${page === el + 1 ? "active" : ""}`}
+												>
+													{el + 1}
+												</button>
+											))}
+											<button onClick={nextPage} className="page-arrow">
+												&rarr;
+											</button>
+										</div>
+									</>
+								}
 							</div>
 							<div className={openDefinition ? "body-dictionary__right right-content _right-open" : "body-dictionary__right right-content"} >
 								<div onClick={() => setOpenDefinition(false)} className="right-content__close"></div>
 								<h2 className="right-content__title">Description and usage guide</h2>
-								<div className="right-content__body definition">
-									<h2 className="definition__title">Definition:</h2>
-									<p className="definition__content">{defifnition}</p>
-								</div>
-								<div className="right-content__body usage">
-									<h2 className="usage__title">Example:</h2>
-									<p className="usage__content">{!example ? 'we dont have example' : example}</p>
-								</div>
+								{descriptionStatus === 'loading'
+									?
+									<Loader />
+									:
+									<>
+										<div className="right-content__body definition">
+											<h2 className="definition__title">Definition:</h2>
+											<p className="definition__content">{defifnition}</p>
+										</div>
+										<div className="right-content__body usage">
+											<h2 className="usage__title">Example:</h2>
+											<p className="usage__content">{!example ? 'we dont have example' : example}</p>
+										</div>
+									</>
+								}
 							</div>
 						</div>
 					</div>
