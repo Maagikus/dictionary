@@ -754,6 +754,8 @@ textarea.input {
 .left-content__item {
 	border-bottom: 1px solid #74cc92;
 	padding-bottom: 0.25rem;
+	padding-right: 0.25rem;
+	display: flex;
 }
 .left-content__item.empty {
 	border-bottom: 1px solid red;
@@ -770,6 +772,7 @@ textarea.input {
 	justify-content: space-between;
 	padding-left: 1.3125rem;
 	padding-right: 2.75rem;
+	flex: 1 0 auto;
 }
 
 .right-content {
@@ -1633,4 +1636,23 @@ textarea.input {
 .error {
 	color: red;
 	font-size: 14px;
+}
+.delete {
+	color: white;
+	background-color: red;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 0.3s ease 0s;
+}
+.delete:hover {
+	color: red;
+	background-color: white;
+	font-weight: bold;
+	transform: scale(1.5);
 }

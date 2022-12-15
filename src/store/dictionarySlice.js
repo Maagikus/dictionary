@@ -19,6 +19,12 @@ export const fetchUserDictionary = createAsyncThunk('dictionary/fetchUserDiction
 		return response.json()
 	}
 })
+export const deleteUserDictionary = createAsyncThunk('dictionary/deleteUserDictionary', async (id) => {
+	const response = await fetch(`http://localhost:4444/dictionary/${id}`, { method: 'DELETE' })
+	if (response.status === 200) {
+		return response.json()
+	}
+})
 const initialState = {
 	data: null,
 	status: 'idle',
@@ -56,6 +62,21 @@ export const dictionarySlice = createSlice({
 
 		},
 		[fetchUserDictionary.rejected]: (state, action) => {
+			state.data = null
+			state.status = 'error'
+
+		},
+		[deleteUserDictionary.pending]: (state, action) => {
+			state.data = null
+			state.status = 'loading'
+
+		},
+		[deleteUserDictionary.fulfilled]: (state, action) => {
+			state.dictionary = state.dictionary.filter(item => item._id != action.payload._id)
+			state.status = 'loaded'
+
+		},
+		[deleteUserDictionary.rejected]: (state, action) => {
 			state.data = null
 			state.status = 'error'
 

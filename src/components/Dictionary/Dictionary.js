@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchUserDictionary } from "../../store/dictionarySlice"
+import { fetchUserDictionary, deleteUserDictionary } from "../../store/dictionarySlice"
 import AddForm from "../AddForm/AddForm"
 import usePagination from '../../hooks/usePaginnation.hook'
 import Loader from '../Loader/Loader'
@@ -43,9 +43,12 @@ function Dictionary() {
 				setExample(example)
 			})
 	}
+	const onDelete = (id) => {
+		dispatch(deleteUserDictionary(id))
+	}
 	const renderDictionary = (arr) => {
 		if (arr) {
-			const element = arr.slice(firstContentIndex, lastContentIndex).map(({ word, translation, transcription }, index) => {
+			const element = arr.slice(firstContentIndex, lastContentIndex).map(({ word, translation, transcription, _id }, index) => {
 				return (
 					<li key={index} className="left-content__item item-content" className={transcription === '' ? "left-content__item item-content empty" : "left-content__item item-content"}>
 						<ul onTouchStart={() => {
@@ -57,6 +60,7 @@ function Dictionary() {
 							<li className="item-content__item">{transcription}</li>
 							<li className="item-content__item">{translation}</li>
 						</ul>
+						{transcription === '' ? <div onClick={() => onDelete(_id)} className="delete">X</div> : null}
 					</li>
 				)
 			})
