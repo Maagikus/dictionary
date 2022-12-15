@@ -755,6 +755,10 @@ textarea.input {
 	border-bottom: 1px solid #74cc92;
 	padding-bottom: 0.25rem;
 }
+.left-content__item.empty {
+	border-bottom: 1px solid red;
+	padding-bottom: 0.25rem;
+}
 
 .item-content__list {
 	display: -webkit-box;
@@ -1625,4 +1629,8 @@ textarea.input {
 	100% {
 		opacity: 0;
 	}
+}
+.error {
+	color: red;
+	font-size: 14px;
 }

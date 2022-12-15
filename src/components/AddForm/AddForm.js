@@ -25,8 +25,22 @@ function AddForm({ setActive }) {
 						translation: translation,
 						audio: audio
 					}
+
 					dispatch(addUserDictionary(dictionaryData))
 				})
+				.catch((e) => {
+					setFormError(true)
+					setFormErrorMassage('The entered word is incorrect or does not exist')
+					const dictionaryData = {
+						word: word,
+						transcription: '',
+						translation: translation,
+						audio: audio
+					}
+					dispatch(addUserDictionary(dictionaryData))
+
+				})
+
 			setWord('')
 			setTranslation('')
 			setActive(false)
@@ -49,8 +63,9 @@ function AddForm({ setActive }) {
 				</div>
 			</div>
 			<button className="form-dictionary__button button">Add</button>
-			{formError ? <div>{formErrorMassage}</div> : null}
-		</form>
+			{formError ? <div className="error">{formErrorMassage}</div> : null
+			}
+		</form >
 	)
 }
 export default AddForm

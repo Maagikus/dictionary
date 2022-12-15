@@ -47,7 +47,7 @@ function Dictionary() {
 		if (arr) {
 			const element = arr.slice(firstContentIndex, lastContentIndex).map(({ word, translation, transcription }, index) => {
 				return (
-					<li key={index} className="left-content__item item-content">
+					<li key={index} className="left-content__item item-content" className={transcription === '' ? "left-content__item item-content empty" : "left-content__item item-content"}>
 						<ul onTouchStart={() => {
 							setOpenDefinition(true)
 							viewDescr(word)
@@ -80,6 +80,7 @@ function Dictionary() {
 				<ul
 					className="find-popup__list">
 					{arr.map(({ word, transcription, translation }) => {
+
 						return (
 							<>
 								<li className="find-popup__item">{word}</li>
