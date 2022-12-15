@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import useAudio from "../../hooks/useAudio.hook";
+import useApiDictionaryService from "../../services/api.dictionary.service";
+import QuizeForm from "./QuizeForm";
+
 function Quize() {
+
 	const [condition, setCondition] = useState('Choose quize');
+	const [choosenElement, setChoosenElement] = useState(false);
 	const [isCorrect, setIsCorrect] = useState(true);
 	const [description, setDescription] = useState('');
 	const [ansver, setAnsver] = useState('');
@@ -12,39 +16,51 @@ function Quize() {
 	const [unnknown, setUnnknown] = useState([]);
 	const [popupVisible, setPopupVisible] = useState(false)
 	const data = useSelector(state => state.dictionary.dictionary);
+	const { getDefinitionAndExample } = useApiDictionaryService()
 
 
 	const renderChooseElement = (e) => {
 		e.preventDefault()
 		switch (e.target.textContent) {
 			case 'Listening':
+				setChoosenElement(true)
 				setTypeOfQuize('Listening')
 				setCondition('Enter a word from the audio')
 
 				break;
 			case 'Vocabulary':
+				setChoosenElement(true)
 				setTypeOfQuize('Vocabulary')
 				setCondition('Enter the word that matches the description')
 				break;
 		}
 	}
 	const viewDescr = async (word) => {
-		const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-		const data = await response.json()
-		const { definition, example } = data[0].meanings[0].definitions[0]
-		setDescription(definition)
-
+		getDefinitionAndExample(word)
+			.then(({ definition, example }) => {
+				setDescription(definition)
+			})
 	}
 	const onStart = (e) => {
 		e.preventDefault()
-
 		setAnsver('')
 		setIsCorrect(true)
-		const random = Math.floor(Math.random() * data.length)
-		const { word, audio } = data[random]
-		setCorrectWord(word)
-		viewDescr(word)
-		if (typeOfQuize === 'Listening') new Audio(audio).play()
+		if (typeOfQuize === 'Listening') {
+			const filteredData = data.filter((item) => item.audio != '')
+			const random = Math.floor(Math.random() * filteredData.length)
+			const { word, audio } = filteredData[random]
+			new Audio(audio).play()
+			setCorrectWord(word)
+			viewDescr(word)
+		} else {
+			const random = Math.floor(Math.random() * data.length)
+			const { word, audio } = data[random]
+			setCorrectWord(word)
+			viewDescr(word)
+		}
+
+
+
 	}
 	const onCheck = (e) => {
 		e.preventDefault()
@@ -72,15 +88,15 @@ function Quize() {
 
 		return (
 			<div className="unnknown-popup">
-				<div onClick={() => setPopupVisible(false)} class="unnknown-popup__close">x</div>
+				<div onClick={() => setPopupVisible(false)} className="unnknown-popup__close">x</div>
 				{arr.length != 0
 					?
 					<ul
 						className="unnknown-popup__list">
-						{arr.map((item) => {
+						{arr.map((item, index) => {
 							return (
 								<>
-									<li className="unnknown-popup__item">{item}</li>
+									<li key={index} className="unnknown-popup__item">{item}</li>
 								</>
 							)
 						})}
@@ -111,24 +127,30 @@ function Quize() {
 								<button onClick={(e) => renderChooseElement(e)} type="submit" className={typeOfQuize === 'Vocabulary' ? "choose__button button _active" : "choose__button button"}>Vocabulary</button>
 							</div>
 						</div>
-						<form action="#" className="quize__wrapper body-quize">
-							<div className="body-quize__intro">{condition}</div>
-							<div className="body-quize__control">
-								<button onClick={(e) => {
-									onStart(e)
-									setUnnknown([])
-								}} type="submit" className="body-quize__button button">Start</button>
-								<button type="submit" onClick={e => onStop(e)} className="body-quize__button button">Stop</button>
-							</div>
-							{typeOfQuize === 'Vocabulary' ? <div div class="body-quize__descr">{description}</div> : null}
-							{!isCorrect ? <div className="body-quize__error">{error}</div> : null}
-							{correctWord}
-							<input value={ansver} onChange={e => setAnsver(e.target.value)} autoComplete="off" type="text" name="form[]" data-error="Ошибка" placeholder="" className="body-quize__input input" />
-							<div className="body-quize__control">
-								<button type="submit" onClick={e => onCheck(e)} className="body-quize__button button">Check</button>
-								<button type="submit" onClick={e => onSkip(e)} className="body-quize__button button">Skip</button>
-							</div>
-						</form>
+						{choosenElement
+							?
+							<>
+								<QuizeForm
+									condition={condition}
+									onStart={onStart}
+									setUnnknown={setUnnknown}
+									onStop={onStop}
+									typeOfQuize={typeOfQuize}
+									description={description}
+									isCorrect={isCorrect}
+									error={error}
+									correctWord={correctWord}
+									ansver={ansver}
+									setAnsver={setAnsver}
+									onCheck={onCheck}
+									onSkip={onSkip}
+								/>
+							</>
+
+							:
+							<div>Let`s choose quize</div>
+						}
+
 					</div>
 				</div>
 			</div >

@@ -8,9 +8,16 @@ const useApiDictionaryService = () => {
 	}
 	const getTranscriptionAndAudio = async (word) => {
 		const res = await request(`${_apiBase}${word}`)
-		return _transformTranscriptionAndAudio(res[0])
+		return _transformTranscriptionAndAudio(res[0], word)
 	}
-	const _transformTranscriptionAndAudio = (data) => {
+	const _transformTranscriptionAndAudio = (data, word) => {
+		if (word.includes('%20')) {
+			return {
+				transcription: word.replace(/%20/g, ' '),
+				audio: ''
+			}
+
+		}
 		const audio = data.phonetics.filter(item => item.audio)
 		return {
 			transcription: data.phonetics[1].text,

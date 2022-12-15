@@ -7,7 +7,6 @@ function Results() {
 	const filteredWordsList = wordsList.filter(item => {
 		return item.createdAt.slice(0, 10).replace(/-/g, '') >= currentDate
 	})
-	console.log(filteredWordsList);
 	return (
 		<section className="result">
 			<div className="result__container">

@@ -42,15 +42,6 @@ function Dictionary() {
 				setDefinition(definition)
 				setExample(example)
 			})
-
-		// const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${someWord}`)
-		// if (response.ok) {
-		// 	setDescriptionStatus('loaded')
-		// 	const data = await response.json()
-		// 	const { definition, example } = data[0].meanings[0].definitions[0]
-		// 	setDefinition(definition)
-		// 	setExample(example)
-		// }
 	}
 	const renderDictionary = (arr) => {
 		if (arr) {
@@ -84,8 +75,8 @@ function Dictionary() {
 	const renderFoundedWord = (arr) => {
 		return (
 			<div className="find-popup">
-				<div onClick={() => setPopupVisible(false)} class="find-popup__close">x</div>
-				<div class="find-popup__descr">{defifnition}</div>
+				<div onClick={() => setPopupVisible(false)} className="find-popup__close">x</div>
+				<div className="find-popup__descr">{defifnition}</div>
 				<ul
 					className="find-popup__list">
 					{arr.map(({ word, transcription, translation }) => {
