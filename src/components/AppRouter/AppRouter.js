@@ -21,6 +21,7 @@ const AppRouter = () => {
 						))
 					}
 					<Redirect to='/dictionary' />
+
 				</>
 
 			</Switch>
