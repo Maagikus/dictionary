@@ -72,7 +72,7 @@ export const dictionarySlice = createSlice({
 
 		},
 		[deleteUserDictionary.fulfilled]: (state, action) => {
-			state.dictionary = state.dictionary.filter(item => item._id != action.payload._id)
+			state.dictionary = state.dictionary.filter(item => item._id !== action.payload._id)
 			state.status = 'loaded'
 
 		},

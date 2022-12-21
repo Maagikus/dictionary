@@ -1,7 +1,7 @@
 import { useHttp } from "../hooks/http.hooks";
 const useApiDictionaryService = () => {
 	const _apiBase = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
-	const { loading, request, error, clearError } = useHttp()
+	const { loading, request, error } = useHttp()
 	const getDefinitionAndExample = async (word) => {
 		const res = await request(`${_apiBase}${word}`)
 		return _transformDefinitionAndExample(res[0].meanings[0].definitions[0])

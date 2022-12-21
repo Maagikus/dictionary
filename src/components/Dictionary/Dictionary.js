@@ -19,6 +19,7 @@ function Dictionary() {
 	const [foundWord, setFoundWord] = useState([])
 	const [popupVisible, setPopupVisible] = useState(false)
 	const [descriptionStatus, setDescriptionStatus] = useState('idle')
+	const [foundMassage, setFoundMassage] = useState('idle')
 	useEffect(() => {
 		dispatch(fetchUserDictionary(id))
 	}, [])
@@ -75,25 +76,35 @@ function Dictionary() {
 			setFoundWord(filteredList)
 			setPopupVisible(true)
 		}
+		setFoundMassage('You dont have this word in dictionary let`s write it')
+		setDefinition('')
+		setFoundWord(filteredList)
+		setPopupVisible(true)
 	}
 	const renderFoundedWord = (arr) => {
 		return (
 			<div className="find-popup">
 				<div onClick={() => setPopupVisible(false)} className="find-popup__close">x</div>
-				<div className="find-popup__descr">{defifnition}</div>
-				<ul
-					className="find-popup__list">
-					{arr.map(({ word, transcription, translation }) => {
+				{arr.length == 0
+					?
+					<div>{foundMassage}</div>
+					:
+					<>
+						<div className="find-popup__descr">{defifnition}</div>
+						<ul
+							className="find-popup__list">
+							{arr.map(({ word, transcription, translation }) => {
 
-						return (
-							<>
-								<li className="find-popup__item">{word}</li>
-								<li className="find-popup__item">{transcription}</li>
-								<li className="find-popup__item">{translation}</li>
-							</>
-						)
-					})}
-				</ul>
+								return (
+									<>
+										<li className="find-popup__item">{word}</li>
+										<li className="find-popup__item">{transcription}</li>
+										<li className="find-popup__item">{translation}</li>
+									</>
+								)
+							})}
+						</ul>
+					</>}
 			</div>
 		)
 	}

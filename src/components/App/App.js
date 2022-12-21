@@ -12,7 +12,6 @@ function App() {
 		if (!!token) {
 			dispatch(fetchAuthMe(token))
 		}
-
 	}, [])
 	return (
 		<Router>

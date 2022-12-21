@@ -46,17 +46,19 @@ function Quize() {
 		setAnsver('')
 		setIsCorrect(true)
 		if (typeOfQuize === 'Listening') {
-			const filteredData = data.filter((item) => item.audio != '')
+			const filteredData = data.filter((item) => item.audio !== '')
 			const random = Math.floor(Math.random() * filteredData.length)
 			const { word, audio } = filteredData[random]
 			new Audio(audio).play()
 			setCorrectWord(word)
 			viewDescr(word)
 		} else {
-			const random = Math.floor(Math.random() * data.length)
-			const { word, audio } = data[random]
+			const filteredData = data.filter((item) => item.transcription !== '')
+			const random = Math.floor(Math.random() * filteredData.length)
+			const { word } = filteredData[random]
 			setCorrectWord(word)
 			viewDescr(word)
+
 		}
 
 

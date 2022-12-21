@@ -9,7 +9,7 @@ import { privateRoutes, publicRoutes } from '../../router/routes'
 import { selectIsAuth } from '../../store/userSlice'
 const AppRouter = () => {
 	const isAuth = useSelector(selectIsAuth)
-	console.log();
+
 	return isAuth
 		?
 		(

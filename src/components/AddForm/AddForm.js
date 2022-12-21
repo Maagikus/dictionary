@@ -12,7 +12,7 @@ function AddForm({ setActive }) {
 	const [formError, setFormError] = useState(false)
 	const { loading, error, getTranscriptionAndAudio } = useApiDictionaryService()
 	const onSubmit = async (e) => {
-		console.log(word.replace(/ /g, '%20'))
+
 		e.preventDefault()
 		if (word.length > 1 && translation.length > 1) {
 			getTranscriptionAndAudio(word.replace(/ /g, '%20'))
