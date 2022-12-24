@@ -43,6 +43,7 @@ function Dictionary() {
 				setDefinition(definition)
 				setExample(example)
 			})
+			.catch(() => setDescriptionStatus('error'))
 	}
 	const onDelete = (id) => {
 		dispatch(deleteUserDictionary(id))
@@ -75,6 +76,7 @@ function Dictionary() {
 			viewDescr(word)
 			setFoundWord(filteredList)
 			setPopupVisible(true)
+			return
 		}
 		setFoundMassage('You dont have this word in dictionary let`s write it')
 		setDefinition('')
@@ -182,11 +184,11 @@ function Dictionary() {
 									<>
 										<div className="right-content__body definition">
 											<h2 className="definition__title">Definition:</h2>
-											<p className="definition__content">{defifnition}</p>
+											<p className="definition__content">{descriptionStatus !== 'error' ? defifnition : 'we don`t have definition'}</p>
 										</div>
 										<div className="right-content__body usage">
 											<h2 className="usage__title">Example:</h2>
-											<p className="usage__content">{!example ? 'we dont have example' : example}</p>
+											<p className="usage__content">{!example || descriptionStatus === 'error' ? 'we dont have example' : example}</p>
 										</div>
 									</>
 								}
