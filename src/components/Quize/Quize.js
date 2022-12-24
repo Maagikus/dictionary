@@ -104,7 +104,7 @@ function Quize() {
 						})}
 					</ul>
 					:
-					<div>You are smarty student</div>
+					<div className="center">You are smarty student</div>
 				}
 			</div>
 		)
@@ -150,7 +150,7 @@ function Quize() {
 							</>
 
 							:
-							<div>Let`s choose quize</div>
+							<div className="center">Let`s choose quize</div>
 						}
 
 					</div>

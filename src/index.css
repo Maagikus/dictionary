@@ -224,6 +224,9 @@ textarea.input {
 .menu-open .header {
 	height: 100%;
 }
+.menu-open body {
+	overflow: hidden;
+}
 
 .header__container {
 	display: -webkit-box;
@@ -1142,10 +1145,12 @@ textarea.input {
 		-webkit-transition: all 0.3s ease 0s;
 		-o-transition: all 0.3s ease 0s;
 		transition: all 0.3s ease 0s;
+		opacity: 0;
 	}
 
 	.menu-open .menu__body {
 		left: 0;
+		opacity: 1;
 	}
 
 	.menu__list {
@@ -1655,4 +1660,7 @@ textarea.input {
 	background-color: white;
 	font-weight: bold;
 	transform: scale(1.5);
+}
+.center {
+	text-align: center;
 }

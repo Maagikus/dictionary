@@ -120,7 +120,6 @@ function Dictionary() {
 			setFormOpen(false)
 			e.stopPropagation()
 		}} className="dictionary">
-
 			{popupVisible ? foundElement : null}
 			<div className="dictionary__container">
 				<div className="dictionary__body body-dictionary">
