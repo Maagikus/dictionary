@@ -5,7 +5,7 @@ const initialState = {
 	status: 'idle'
 }
 export const fetchUserData = createAsyncThunk('user/fetchUserData', async (data) => {
-	const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}auth/login`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (data)
 
 })
 export const fetchAuthMe = createAsyncThunk('user/fetchAuthMe', async (token) => {
-	const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/me`, {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}auth/me`, {
 		method: 'GET',
 		headers: {
 			Authorization: `${token}`
@@ -28,7 +28,7 @@ export const fetchAuthMe = createAsyncThunk('user/fetchAuthMe', async (token) =>
 	return response.json()
 })
 export const addUserData = createAsyncThunk('user/addUserData', async (data) => {
-	const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}auth/register`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

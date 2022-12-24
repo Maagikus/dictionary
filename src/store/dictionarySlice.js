@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const addUserDictionary = createAsyncThunk('dictionary/addUserDictionary', async (data) => {
-	const response = await fetch(`${process.env.REACT_APP_API_URL}/dictionary`, {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}dictionary`, {
 		method: 'POST',
 		headers: {
 			Authorization: localStorage.getItem('token'),
@@ -15,13 +15,13 @@ export const addUserDictionary = createAsyncThunk('dictionary/addUserDictionary'
 	}
 })
 export const fetchUserDictionary = createAsyncThunk('dictionary/fetchUserDictionary', async (id) => {
-	const response = await fetch(`${process.env.REACT_APP_API_URL}/dictionary/${id}`)
+	const response = await fetch(`${process.env.REACT_APP_API_URL}dictionary/${id}`)
 	if (response.status === 200) {
 		return response.json()
 	}
 })
 export const deleteUserDictionary = createAsyncThunk('dictionary/deleteUserDictionary', async (id) => {
-	const response = await fetch(`${process.env.REACT_APP_API_URL}/dictionary/${id}`, { method: 'DELETE' })
+	const response = await fetch(`${process.env.REACT_APP_API_URL}dictionary/${id}`, { method: 'DELETE' })
 	if (response.status === 200) {
 		return response.json()
 	}
